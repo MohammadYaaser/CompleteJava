@@ -6,16 +6,160 @@ import com.composition.*;
 import com.composition.challenge.*;
 import com.encapsulation.EnhancedPlayer;
 import com.encapsulation.Player;
+import com.encapsulation.Printer;
 import com.math.Calculator;
 import com.shape.Rectangle;
 import com.transport.Outlander;
-import com.composition.*;
 
 import java.io.*;
 import java.util.Scanner;
 
 import static java.util.stream.Collectors.joining;
 
+
+class Movie{
+    private String name;
+
+    public Movie(String name) {
+        this.name = name;
+    }
+
+    public String plot(){
+        return "No plots here";
+    }
+
+    public String getName() {
+        return name;
+    }
+}
+
+class Jaws extends Movie {
+    public Jaws() {
+        super("Jaws");
+    }
+
+    public String plot() {
+        return "A Shark eats lots of people";
+    }
+}
+
+class Independence extends Movie {
+    public Independence() {
+        super("Independence");
+    }
+
+    @Override
+    public String plot() {
+        return "Aliens attempt to take over planet earth";
+    }
+
+}
+
+
+class MazeRun extends Movie {
+    public MazeRun() {
+        super("Maze Runner");
+    }
+
+    @Override
+    public String plot() {
+        return "Kids try and escape a maze";
+    }
+}
+
+class StarWars extends Movie {
+    public StarWars() {
+        super("StarWars");
+    }
+
+    @Override
+    public String plot() {
+        return "Imperial Forces try to take over universe";
+    }
+}
+
+class Forgetable extends Movie {
+    public Forgetable() {
+        super("Forgetable");
+    }
+    // No Plot Method
+}
+
+class Car {
+    private boolean engine;
+    private int cylinder;
+    private String name;
+    private int wheels;
+
+    public Car(int cylinder, String name) {
+        this.engine = true;
+        this.cylinder = cylinder;
+        this.name = name;
+        this.wheels = 4;
+    }
+
+    public int getCylinder() {
+        return cylinder;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String startEngine() {
+        return "Car -> startEngine()";
+    }
+
+    public String accelerate() {
+        return "Car -> accelerate()";
+    }
+
+    public String brake() {
+        return "Car -> brake()";
+    }
+}
+
+class Mitshubishi extends Car {
+    public Mitshubishi(int cylinder, String name) {
+        super(cylinder, name);
+    }
+
+    @Override
+    public String startEngine() {
+        return "Mitshubishi -> startEngine()";
+    }
+
+    @Override
+    public String accelerate() {
+        return "Mitshubishi -> accelerate()";
+    }
+
+    @Override
+    public String brake() {
+        return "Mitshubishi -> brake()";
+    }
+}
+
+class Holden extends Car {
+    public Holden(int cylinder, String name) {
+        super(cylinder, name);
+    }
+
+    @Override
+    public String startEngine() {
+        return "Holden -> startEngine()";
+    }
+
+    @Override
+    public String accelerate() {
+        return "Holden -> accelerate()";
+    }
+
+    @Override
+    public String brake() {
+        return "Holden -> brake()";
+    }
+}
 public class Main extends SubClass{
 
     private static final Scanner scanner = new Scanner(System.in);
@@ -91,7 +235,7 @@ public class Main extends SubClass{
 
         outlander.stop();
         /* Composition example */
-        System.out.println("\n\n Composition \n\n");
+        System.out.println("\n\nComposition :\n");
         Dimensions dimensions = new Dimensions(20, 20, 5);
         Case theCase = new Case("220B", "Dell", "240", dimensions);
 
@@ -148,6 +292,36 @@ public class Main extends SubClass{
         bedRoom.makeBed();
         bedRoom.getLamp().turnOn();
 
+        /*Encapsulation Challenge*/
+        //Create a class and demonstrate proper encapsulation techniques
+        // the class will be called Printer
+        // It will simulate a real Computer Printer
+        // It should have fields for the toner Level, number of pages printer, and
+        //also whether its a duplex printer (capable of printing on both sides of the paper).
+        // Add methods its a duplex printer on both side of the power
+        // simulate printing a page (which should increase the number of pages printed).
+        // decide on the scope, whether to use constructors, and anything else you  think is needed.
+
+        System.out.println("\n\nEncapsulation Challenge:\n");
+
+        Printer printer = new Printer(50, false);
+        System.out.println("Initial page count = " + printer.getPagesPrinted());
+        int pagesPrinted = printer.printPages(4);
+        System.out.println("Pages printed was " + pagesPrinted + " new total print count for printer = " + printer.getPagesPrinted());
+
+        pagesPrinted = printer.printPages(2);
+        System.out.println("Pages printed was " + pagesPrinted + " new total print count for printer= " + printer.getPagesPrinted());
+
+        /*polymorphism */
+        System.out.println("Polymorphism using class method");
+
+        for (int i = 1; i < 11; i++) {
+            Movie movie = randomMovie();
+            System.out.println("Movie #" + i + " : " + movie.getName() + "\n" +
+                    "Plot : " + movie.plot() + "\n");
+        }
+
+        // Polymorphism Challenge
         // we are going to go back to the car analogy.
         // Create a base class called car
         // It Should have a few fields that would be appropriate for a generic car class.
@@ -161,7 +335,39 @@ public class Main extends SubClass{
         //
         //show s message for each in the base class
         // Now create 3 sub classes for your favourite vehicles
+        //Override the appropriate methods to demonstrate polymorphism in use
+        // put all classes int the one java file(this one).
 
+        System.out.println("\n\nPolymorphism Challenge");
+        Car car = new Car(8, "Base car");
+        System.out.println(car.startEngine());
+        System.out.println(car.accelerate());
+        System.out.println(car.brake());
+
+        Mitshubishi mitshubishi = new Mitshubishi(8, "Outlander VRW 4WD");
+        System.out.println(mitshubishi.startEngine());
+        System.out.println(mitshubishi.accelerate());
+        System.out.println(mitshubishi.brake());
+
+        Car ford = new Car(6, "Ford Falcon") {
+            @Override
+            public String startEngine() {
+                return "Ford -> startEngine()";
+            }
+
+            @Override
+            public String accelerate() {
+                return "Ford -> accelerate()";
+            }
+
+            @Override
+            public String brake() {
+                return "Ford -> brake()";
+            }
+        };
+        System.out.println(ford.startEngine());
+        System.out.println(ford.accelerate());
+        System.out.println(ford.brake());
 
     }
     public static void display(){
@@ -180,4 +386,26 @@ public class Main extends SubClass{
         a=b;
         b=temp;
     }
+
+    public static Movie randomMovie() {
+        int randomNumber = (int) (Math.random() * 5) + 1;
+        System.out.println("Random Number generated was : " + randomNumber);
+        switch (randomNumber) {
+            case 1:
+                return new Jaws();
+            case 2:
+                return new Independence();
+            case 3:
+                return new MazeRun();
+            case 4:
+                return new StarWars();
+            case 5:
+                return new Forgetable();
+            default:
+                return null;
+        }
+
+    }
+
+
 }
