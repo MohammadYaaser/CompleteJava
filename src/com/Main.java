@@ -3,6 +3,9 @@ package com;
 import com.animal.Animal;
 import com.animal.Dog;
 import com.composition.*;
+import com.composition.challenge.*;
+import com.encapsulation.EnhancedPlayer;
+import com.encapsulation.Player;
 import com.math.Calculator;
 import com.shape.Rectangle;
 import com.transport.Outlander;
@@ -98,9 +101,68 @@ public class Main extends SubClass{
         Motherboard motherboard = new Motherboard("BK-200", "Asus", 4, 6, "v2.44");
 
         PC thePC = new PC(theCase, monitor, motherboard);
-        thePC.getMonitor().drawPixelAt(1500, 1200, "red");
-        thePC.getMotherboard().loadProgram("Windows 1.0");
-        thePC.getThCase().pressPowerButton();
+        thePC.powerUp();
+
+        /*data encapsulation*/
+        Player player = new Player();
+        player.fullName = "Tim";
+        player.health = 20;
+        player.weapon = "Sword";
+
+        int damage = 10;
+        player.loseHealth(damage);
+
+        System.out.println("Remaining heath = " + player.healthRemaining());
+
+        damage = 11;
+        player.health = 200;
+        player.loseHealth((damage));
+        System.out.println("Remaining health = " + player.healthRemaining());
+
+        EnhancedPlayer enhancedPlayer = new EnhancedPlayer("Tim", 200, "Sword");
+        System.out.println("Initial health is  " + enhancedPlayer.getHealth());
+
+
+        /*Challenge*/
+        //Create a single room of a house using composition
+        // Think about the things should be included in the room
+        // Add at least one method to access an object via a getter and
+        // then that object public method to hide the object e.g. not using a getter
+        // but to access the object used in composition within the main class
+        // like you saw in this video.
+
+        System.out.println("\n\nComposition Challenge:\n");
+        Wall wall1 = new Wall("West");
+        Wall wall2 = new Wall("East");
+        Wall wall3 = new Wall("South");
+        Wall wall4 = new Wall("North");
+
+        Ceiling ceiling = new Ceiling(12, 55);
+
+        Bed bed = new Bed("Modern", 4, 3, 1);
+
+        Lamp lamp = new Lamp("Classic", false, 75);
+
+        BedRoom bedRoom = new BedRoom("Tims", wall1, wall2, wall3, wall4, ceiling, bed, lamp);
+
+        bedRoom.makeBed();
+        bedRoom.getLamp().turnOn();
+
+        // we are going to go back to the car analogy.
+        // Create a base class called car
+        // It Should have a few fields that would be appropriate for a generic car class.
+        // engine, cylinders, wheels, etc.
+        // Constructor should initialize cylinder(number fo) and name, and set wheels to 4
+        // and engine to true. Cylinders and names would be passed parameters
+        //
+        //Create appropriate getters
+        //
+        //Create some methods like startEngine, accelerate, and brake
+        //
+        //show s message for each in the base class
+        // Now create 3 sub classes for your favourite vehicles
+
+
     }
     public static void display(){
         System.out.println("From Display");
